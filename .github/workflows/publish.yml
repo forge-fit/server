@@ -54,6 +54,10 @@ jobs:
         run: |
           git commit -m "Update OpenAPI spec"
 
+      - name: Debug Authentication
+        run: |
+          echo ${{ secrets.PAT_TOKEN }}
+
       - name: Push changes
         if: steps.check_changes.outputs.has_changes == 'true'
         env:
