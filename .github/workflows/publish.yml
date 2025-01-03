@@ -27,11 +27,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Set up Git user
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
       - name: Generate OpenAPI spec
         run: npm run generate:openapi
 
@@ -53,6 +48,13 @@ jobs:
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
           git commit -m "Update OpenAPI spec"
+
+      - name: Push changes
+        if: steps.check_changes.outputs.has_changes == 'true'
+        env:
+          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          git push https://x-access-token:${PAT_TOKEN}@github.com/talsag-dev/fit-track-server.git HEAD:main
 
       - name: Bump version
         if: steps.check_changes.outputs.has_changes == 'true'
