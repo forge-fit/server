@@ -59,6 +59,7 @@ jobs:
         env:
           PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
+          export GIT_TRACE=1
           git push https://x-access-token:${PAT_TOKEN}@github.com/talsag-dev/fit-track-server.git HEAD:main
 
       - name: Bump version
