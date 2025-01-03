@@ -25,7 +25,9 @@ export class ExerciseDto {
   })
   gifUrl: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'target muscle group of the exercise',
+  })
   target: string;
 
   @ApiProperty()
