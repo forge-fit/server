@@ -8,6 +8,7 @@ import {
   Max,
 } from 'class-validator';
 import { Type as ClassTransformerType } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum MuscleGroup {
   BACK = 'back',
@@ -23,12 +24,14 @@ export enum MuscleGroup {
 }
 
 export class GetExercisesDto {
+  @ApiProperty({ required: false, default: 0 })
   @IsOptional()
   @IsNumber()
   @Min(0)
   @ClassTransformerType(() => Number)
   offset?: number;
 
+  @ApiProperty({ required: false, default: 20 })
   @IsOptional()
   @IsNumber()
   @Min(1)
@@ -36,11 +39,13 @@ export class GetExercisesDto {
   @ClassTransformerType(() => Number)
   limit?: number;
 
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
   @MaxLength(100)
   search?: string;
 
+  @ApiProperty({ required: false })
   @IsOptional()
   @IsEnum(MuscleGroup)
   targetMuscle?: MuscleGroup;

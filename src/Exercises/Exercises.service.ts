@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Query,
+} from '@nestjs/common';
 import { ExercisesApi } from '@fit-track/exercises-api';
 import { ApiConfigService } from '../shared/api.config';
 import { ExerciseDto } from './dto/exrecise.dto';
@@ -14,7 +18,9 @@ export class ExercisesService {
     );
   }
 
-  async getExercises(getExercisesDto: GetExercisesDto): Promise<ExerciseDto[]> {
+  async getExercises(
+    @Query() getExercisesDto: GetExercisesDto,
+  ): Promise<ExerciseDto[]> {
     try {
       const { offset = 0, limit = 20, search, targetMuscle } = getExercisesDto;
 

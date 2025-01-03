@@ -1,0 +1,134 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/exercises": {
+      "get": {
+        "operationId": "ExercisesController_getExercises",
+        "summary": "Get all exercises",
+        "parameters": [
+          {
+            "name": "offset",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": 0,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "default": 20,
+              "type": "number"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "targetMuscle",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExerciseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "exercises"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Fit Track API",
+    "description": "The Fit Track API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "ExerciseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "bodyPart": {
+            "type": "string",
+            "enum": [
+              "back",
+              "cardio",
+              "chest",
+              "lower arms",
+              "lower legs",
+              "neck",
+              "shoulders",
+              "upper arms",
+              "upper legs",
+              "waist"
+            ]
+          },
+          "equipment": {
+            "type": "string"
+          },
+          "gifUrl": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "secondaryMuscles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "bodyPart",
+          "equipment",
+          "gifUrl",
+          "target",
+          "secondaryMuscles",
+          "instructions"
+        ]
+      }
+    }
+  }
+}
