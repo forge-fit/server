@@ -1,5 +1,5 @@
 {
-  "name": "@fit-track/exercises-api",
+  "name": "@talsag-dev/exercises-api",
   "version": "1.0.9",
   "description": "OpenAPI specification for Fit Track Exercises API",
   "files": [
