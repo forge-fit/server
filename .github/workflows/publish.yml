@@ -16,7 +16,10 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,25 +33,25 @@ jobs:
       - name: Generate OpenAPI spec
         run: npm run generate:openapi
 
-      - name: Bump version
-        id: bump_version
-        uses: paulhatch/semantic-version@v1
+      - name: Get previous tag
+        id: previoustag
+        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get next minor version
+        id: semver
+        uses: 'WyriHaximus/github-action-next-semvers@v1'
         with:
-          branch: main
-          tag-prefix: ''
-          major-pattern: '^BREAKING CHANGE:'
-          minor-pattern: '^feat'
-          patch-pattern: '^fix'
+          version: ${{ steps.previoustag.outputs.tag }}
 
       - name: Update package.json version
-        run: |
-          new_version=$(echo "${{ steps.bump_version.outputs.new_version }}")
-          npm version $new_version --no-git-tag-version
+        run: npm version ${{ steps.semver.outputs.minor }} --no-git-tag-version
 
       - name: Authenticate to npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       - name: Publish to NPM
-        run: npm publish --access public
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
