@@ -1,6 +1,6 @@
 {
   "name": "@fit-track/exercises-api",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "OpenAPI specification for Fit Track Exercises API",
   "files": [
     "openapi.json"
@@ -8,6 +8,9 @@
   "author": "",
   "private": false,
   "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
