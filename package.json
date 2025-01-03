@@ -9,7 +9,7 @@
   "private": false,
   "license": "UNLICENSED",
   "publishConfig": {
-    "@fit-track:registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
     "build": "nest build",
