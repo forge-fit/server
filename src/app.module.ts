@@ -1,10 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigModule } from '@nestjs/config';
+import { ApiConfigService } from './shared/api.config';
+import { ExercisesService } from './Exercises/Exercises.service';
+import { ExercisesController } from './Exercises/Exercises.controller';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath:
+        process.env.NODE_ENV === 'production' ? '.env' : '.local.env',
+      isGlobal: true,
+    }),
+  ],
+  controllers: [ExercisesController],
+  providers: [ApiConfigService, ExercisesService],
 })
 export class AppModule {}
