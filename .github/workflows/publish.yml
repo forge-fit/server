@@ -30,10 +30,13 @@ jobs:
       - name: Generate OpenAPI spec
         run: npm run generate:openapi
 
+      - name: Stage openapi.json
+        run: git add openapi.json
+
       - name: Check for changes in openapi.json
         id: check_changes
         run: |
-          if git diff --quiet openapi.json; then
+          if git diff --cached --quiet openapi.json; then
             echo "No changes in OpenAPI spec"
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
@@ -41,11 +44,10 @@ jobs:
             echo "has_changes=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Configure Git
+      - name: Commit changes
         if: steps.check_changes.outputs.has_changes == 'true'
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          git commit -m "Update OpenAPI spec"
 
       - name: Bump version
         if: steps.check_changes.outputs.has_changes == 'true'
