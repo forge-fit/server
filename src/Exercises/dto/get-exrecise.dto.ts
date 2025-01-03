@@ -9,27 +9,17 @@ import {
 } from 'class-validator';
 import { Type as ClassTransformerType } from 'class-transformer';
 
-enum MuscleGroup {
-  ABDOMINALS = 'abdominals',
-  BICEPS = 'biceps',
-  TRICEPS = 'triceps',
-  CHEST = 'chest',
+export enum MuscleGroup {
   BACK = 'back',
-  LEGS = 'legs',
-  SHOULDERS = 'shoulders',
-}
-
-enum Difficulty {
-  BEGINNER = 'beginner',
-  INTERMEDIATE = 'intermediate',
-  EXPERT = 'expert',
-}
-
-enum Type {
-  STRENGTH = 'strength',
   CARDIO = 'cardio',
-  STRETCHING = 'stretching',
-  PLYOMETRICS = 'plyometrics',
+  CHEST = 'chest',
+  LOWER_ARMS = 'lower arms',
+  LOWER_LEGS = 'lower legs',
+  NECK = 'neck',
+  SHOULDERS = 'shoulders',
+  UPPER_ARMS = 'upper arms',
+  UPPER_LEGS = 'upper legs',
+  WAIST = 'waist',
 }
 
 export class GetExercisesDto {
@@ -53,13 +43,5 @@ export class GetExercisesDto {
 
   @IsOptional()
   @IsEnum(MuscleGroup)
-  muscle?: MuscleGroup;
-
-  @IsOptional()
-  @IsEnum(Difficulty)
-  difficulty?: Difficulty;
-
-  @IsOptional()
-  @IsEnum(Type)
-  type?: Type;
+  targetMuscle?: MuscleGroup;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ExercisesApi } from '@fit-track/exercises-api';
 import { ApiConfigService } from '../shared/api.config';
 import { ExerciseDto } from './dto/exrecise.dto';
@@ -16,7 +16,7 @@ export class ExercisesService {
 
   async getExercises(getExercisesDto: GetExercisesDto): Promise<ExerciseDto[]> {
     try {
-      const { offset = 0, limit = 20, search } = getExercisesDto;
+      const { offset = 0, limit = 20, search, targetMuscle } = getExercisesDto;
 
       const { data } = await this.exercisesApi.getExercises(
         0,
@@ -31,12 +31,22 @@ export class ExercisesService {
         );
       }
 
+      if (targetMuscle) {
+        exercises = exercises.filter(
+          (exercise) =>
+            exercise.target ||
+            exercise.secondaryMuscles
+              .map((muscle) => muscle.toLowerCase())
+              .includes(targetMuscle.toLowerCase()),
+        );
+      }
+
       const paginatedExercises = exercises.slice(offset, offset + limit);
 
       return paginatedExercises.map((exercise) => new ExerciseDto(exercise));
     } catch (error) {
       console.error('Error fetching exercises:', error);
-      throw error;
+      throw new InternalServerErrorException('Error fetching exercises');
     }
   }
 }

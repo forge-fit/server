@@ -3,6 +3,7 @@ import { ExercisesService } from './Exercises.service';
 import { ApiConfigService } from '../shared/api.config';
 import { ExercisesApi } from '@fit-track/exercises-api';
 import { externalExercisesBuilder } from '../../test/builders';
+import { MuscleGroup } from './dto/get-exrecise.dto';
 
 describe('ExercisesService', () => {
   let service: ExercisesService;
@@ -53,5 +54,62 @@ describe('ExercisesService', () => {
     const exercises = await service.getExercises({ search: 'test' });
     expect(exercises).toBeDefined();
     expect(exercises.length).toBe(2);
+  });
+
+  it('should get exercises with limit and offset', async () => {
+    const mockExercises = [
+      externalExercisesBuilder({ name: 'test' }),
+      externalExercisesBuilder({ name: 'test2' }),
+    ];
+
+    jest
+      .spyOn(ExercisesApi.prototype as any, 'getExercises')
+      .mockResolvedValueOnce({ data: mockExercises });
+
+    const exercises = await service.getExercises({ limit: 1, offset: 1 });
+    expect(exercises).toBeDefined();
+    expect(exercises.length).toBe(1);
+  });
+
+  it('should throw error if the api returns an error', async () => {
+    jest
+      .spyOn(ExercisesApi.prototype as any, 'getExercises')
+      .mockRejectedValueOnce(new Error('test'));
+
+    await expect(service.getExercises({})).rejects.toThrow(
+      'Error fetching exercises',
+    );
+  });
+
+  it('should get exercises with target muscle', async () => {
+    const mockExercises = [
+      externalExercisesBuilder({
+        name: 'shoulders incline',
+        target: 'shoulders',
+      }),
+      externalExercisesBuilder({
+        name: 'shoulders with dumbbells',
+        target: 'shoulders',
+      }),
+      externalExercisesBuilder({
+        name: 'shoulders with barbell',
+        target: 'shoulders',
+      }),
+      externalExercisesBuilder({
+        name: 'shoulders with dumbbells',
+        secondaryMuscles: ['shoulders'],
+      }),
+    ];
+
+    jest
+      .spyOn(ExercisesApi.prototype as any, 'getExercises')
+      .mockResolvedValueOnce({ data: mockExercises });
+
+    const exercises = await service.getExercises({
+      targetMuscle: MuscleGroup.SHOULDERS,
+    });
+
+    expect(exercises).toBeDefined();
+    expect(exercises.length).toBe(4);
   });
 });
