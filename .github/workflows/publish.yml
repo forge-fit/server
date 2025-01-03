@@ -27,54 +27,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Set up Git user
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
       - name: Generate OpenAPI spec
         run: npm run generate:openapi
 
-      - name: Stage openapi.json
-        run: git add openapi.json
-
-      - name: Check for changes in openapi.json
-        id: check_changes
-        run: |
-          if git diff --cached --quiet openapi.json; then
-            echo "No changes in OpenAPI spec"
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          else
-            echo "Changes detected in OpenAPI spec"
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Commit changes
-        if: steps.check_changes.outputs.has_changes == 'true'
-        run: |
-          git commit -m "Update OpenAPI spec"
-
-      - name: Debug Authentication
-        run: |
-          echo ${{ secrets.PAT_TOKEN }}
-
-      - name: Push changes
-        if: steps.check_changes.outputs.has_changes == 'true'
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          export GIT_TRACE=1
-          git push https://x-access-token:${PAT_TOKEN}@github.com/talsag-dev/fit-track-server.git HEAD:main
-
       - name: Bump version
-        if: steps.check_changes.outputs.has_changes == 'true'
+        id: bump_version
+        uses: paulhatch/semantic-version@v1
+        with:
+          branch: main
+          tag-prefix: ''
+          major-pattern: '^BREAKING CHANGE:'
+          minor-pattern: '^feat'
+          patch-pattern: '^fix'
+
+      - name: Update package.json version
         run: |
-          npm version patch -m "Bump version to %s [skip ci]"
-          git push
-          git push --tags
+          new_version=$(echo "${{ steps.bump_version.outputs.new_version }}")
+          npm version $new_version --no-git-tag-version
 
       - name: Publish to NPM
-        if: steps.check_changes.outputs.has_changes == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
