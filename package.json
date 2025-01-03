@@ -5,11 +5,8 @@
   "files": [
     "openapi.json"
   ],
-  "publishConfig": {
-    "access": "public"
-  },
   "author": "",
-  "private": true,
+  "private": false,
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
