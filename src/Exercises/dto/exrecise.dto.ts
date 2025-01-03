@@ -20,7 +20,9 @@ export class ExerciseDto {
   })
   equipment: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'gif url of the exercise',
+  })
   gifUrl: string;
 
   @ApiProperty()
