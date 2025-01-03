@@ -1,6 +1,6 @@
 {
-  "name": "@fit-track/exercises-api-spec",
-  "version": "1.0.0",
+  "name": "@fit-track/exercises-api",
+  "version": "1.0.8",
   "description": "OpenAPI specification for Fit Track Exercises API",
   "files": [
     "openapi.json"
