@@ -45,6 +45,9 @@ jobs:
           new_version=$(echo "${{ steps.bump_version.outputs.new_version }}")
           npm version $new_version --no-git-tag-version
 
+      - name: Authenticate to npm
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+
       - name: Publish to NPM
         run: npm publish --access public
         env:
