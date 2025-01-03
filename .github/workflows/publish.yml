@@ -33,15 +33,6 @@ jobs:
       - name: Generate OpenAPI spec
         run: npm run generate:openapi
 
-      - name: Bump version
-        run: |
-          current_version=$(jq -r '.version' package.json)
-          IFS='.' read -r -a version_parts <<< "$current_version"
-          version_parts[2]=$((version_parts[2] + 1))
-          new_version="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
-          jq ".version = \"$new_version\"" package.json > tmp.json && mv tmp.json package.json
-          echo "Bumped version to $new_version"
-
       - name: Authenticate to npm
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
