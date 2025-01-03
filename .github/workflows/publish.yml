@@ -9,6 +9,9 @@ on:
       - 'package.json'
       - '.github/workflows/publish.yml'
 
+env:
+  GENERATE_OPENAPI: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest

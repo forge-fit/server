@@ -15,7 +15,9 @@ export class ExerciseDto {
   })
   bodyPart: MuscleGroup;
 
-  @ApiProperty()
+  @ApiProperty({
+    description: 'equipment used for the exercise',
+  })
   equipment: string;
 
   @ApiProperty()
