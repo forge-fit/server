@@ -11,6 +11,7 @@ on:
 
 env:
   GENERATE_OPENAPI: true
+  GITHUB_PACKAGES_TOKEN: ${{ secrets.PAT_TOKEN }}
 
 jobs:
   publish:
@@ -42,7 +43,9 @@ jobs:
           echo "Bumped version to $new_version"
 
       - name: Authenticate to npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "@fit-track:registry=https://npm.pkg.github.com" >> ~/.npmrc
 
       - name: Publish to NPM
         run: npm publish --access public
