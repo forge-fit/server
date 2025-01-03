@@ -94,7 +94,8 @@
               "upper arms",
               "upper legs",
               "waist"
-            ]
+            ],
+            "description": "MuscleGroup enum"
           },
           "equipment": {
             "type": "string"

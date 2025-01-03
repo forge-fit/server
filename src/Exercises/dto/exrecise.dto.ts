@@ -9,7 +9,10 @@ export class ExerciseDto {
   @ApiProperty()
   name: string;
 
-  @ApiProperty({ enum: MuscleGroup })
+  @ApiProperty({
+    enum: MuscleGroup,
+    description: 'MuscleGroup enum',
+  })
   bodyPart: MuscleGroup;
 
   @ApiProperty()
