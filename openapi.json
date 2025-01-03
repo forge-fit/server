@@ -95,7 +95,7 @@
               "upper legs",
               "waist"
             ],
-            "description": "MuscleGroup enum"
+            "description": "body part enum of the exercise"
           },
           "equipment": {
             "type": "string"

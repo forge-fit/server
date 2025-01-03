@@ -11,7 +11,7 @@ export class ExerciseDto {
 
   @ApiProperty({
     enum: MuscleGroup,
-    description: 'MuscleGroup enum',
+    description: 'body part enum of the exercise',
   })
   bodyPart: MuscleGroup;
 
