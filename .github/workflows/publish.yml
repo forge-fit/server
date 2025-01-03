@@ -30,13 +30,10 @@ jobs:
       - name: Generate OpenAPI spec
         run: npm run generate:openapi
 
-      - name: Stage openapi.json
-        run: git add openapi.json
-
       - name: Check for changes in openapi.json
         id: check_changes
         run: |
-          if git diff --cached --quiet openapi.json; then
+          if git diff --quiet openapi.json; then
             echo "No changes in OpenAPI spec"
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
