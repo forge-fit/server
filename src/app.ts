@@ -12,9 +12,22 @@ export async function createApp() {
     }),
   );
 
+  const allowedOrigins = [
+    'http://localhost:8080/client', // Development
+    'https://forge-fit.github.io/client', // Production
+  ];
+
   app.enableCors({
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow cookies/auth headers if needed
   });
+
   return app;
 }
