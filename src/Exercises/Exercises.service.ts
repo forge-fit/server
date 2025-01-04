@@ -3,10 +3,10 @@ import {
   InternalServerErrorException,
   Query,
 } from '@nestjs/common';
-import { ExercisesApi } from '@fit-track/exercises-api';
+import { ExercisesApi } from '@forge-fit/exercises-api';
 import { ApiConfigService } from '../shared/api.config';
-import { ExerciseDto } from './dto/exrecise.dto';
-import { GetExercisesDto } from './dto/get-exrecise.dto';
+import { ExerciseDto } from './dto/exercise.dto';
+import { GetExercisesDto } from './dto/get-exercise.dto';
 
 @Injectable()
 export class ExercisesService {

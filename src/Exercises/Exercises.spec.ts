@@ -3,7 +3,7 @@ import { ExercisesService } from './Exercises.service';
 import { ApiConfigService } from '../shared/api.config';
 import { ExercisesApi } from '@fit-track/exercises-api';
 import { externalExercisesBuilder } from '../../test/builders';
-import { MuscleGroup } from './dto/get-exrecise.dto';
+import { MuscleGroup } from './dto/get-exercise.dto';
 
 describe('ExercisesService', () => {
   let service: ExercisesService;

@@ -1,6 +1,6 @@
 {
-  "name": "@talsag-dev/exercises-api",
-  "version": "1.1.1",
+  "name": "@forge-fit/server",
+  "version": "1.1.2",
   "description": "OpenAPI specification for Fit Track Exercises API",
   "files": [
     "openapi.json"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/talsag-dev/exercises-api.git"
+    "url": "https://github.com/forge-fit/server.git"
   },
   "scripts": {
     "build": "nest build",

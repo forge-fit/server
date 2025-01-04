@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ExercisesService } from './Exercises.service';
-import { GetExercisesDto } from './dto/get-exrecise.dto';
-import { ExerciseDto } from './dto/exrecise.dto';
+import { GetExercisesDto } from './dto/get-exercise.dto';
+import { ExerciseDto } from './dto/exercise.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('exercises')

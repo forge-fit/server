@@ -1,6 +1,6 @@
 import { Exercise } from '@fit-track/exercises-api';
 import { ApiProperty } from '@nestjs/swagger';
-import { MuscleGroup } from './get-exrecise.dto';
+import { MuscleGroup } from './get-exercise.dto';
 
 export class ExerciseDto {
   @ApiProperty()

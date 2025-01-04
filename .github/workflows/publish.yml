@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: '20'
           registry-url: https://npm.pkg.github.com/
-          scope: '@fit-track'
+          scope: '@forge-fit'
 
       - name: Install dependencies
         run: npm ci
@@ -36,7 +36,7 @@ jobs:
       - name: Authenticate to npm
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          echo "@fit-track:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "@forge-fit:registry=https://npm.pkg.github.com" >> ~/.npmrc
 
       - name: Publish to NPM
         run: npm publish --access public
