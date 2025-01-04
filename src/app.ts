@@ -13,7 +13,7 @@ export async function createApp() {
   );
 
   const allowedOrigins = [
-    'http://localhost:8080/client', // Development
+    'http://localhost:8080/', // Development
     'https://forge-fit.github.io/client', // Production
   ];
 
