@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ExercisesService } from './Exercises.service';
 import { ApiConfigService } from '../shared/api.config';
-import { ExercisesApi } from '@fit-track/exercises-api';
+import { ExercisesApi } from '@forge-fit/exercises-api';
 import { externalExercisesBuilder } from '../../test/builders';
 import { MuscleGroup } from './dto/get-exercise.dto';
 
