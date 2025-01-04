@@ -1,18 +1,16 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-// Import your OpenAPI generation logic
-import { setupOpenAPI } from './openapi';
+import { createApp } from './app';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await createApp();
 
-  // Check if the script is run with a specific argument or environment variable
   if (process.env.GENERATE_OPENAPI === 'true') {
+    console.log('Generating OpenAPI specification...');
+    const { setupOpenAPI } = await import('./openapi');
     setupOpenAPI(app);
-    process.exit(0); // Exit after generating the spec
+    process.exit(0);
   }
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 
 bootstrap();

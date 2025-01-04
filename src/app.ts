@@ -13,7 +13,7 @@ export async function createApp() {
   );
 
   const allowedOrigins = [
-    'http://localhost:8080/', // Development
+    'http://localhost:8080', // Development
     'https://forge-fit.github.io/client', // Production
   ];
 
@@ -22,7 +22,7 @@ export async function createApp() {
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error('Not allowed by CORS'));
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
       }
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
