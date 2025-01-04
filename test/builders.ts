@@ -1,4 +1,4 @@
-import { Exercise } from '@fit-track/exercises-api';
+import { Exercise } from '@forge-fit/exercises-api';
 import { chance } from './chance';
 
 export const externalExercisesBuilder = (
