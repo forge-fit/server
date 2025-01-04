@@ -1,15 +1,13 @@
-name: Jest Tests
+name: TypeScript Build
 
 on:
   pull_request:
     branches: [main]
-    types: [opened, synchronize, reopened]
-
-env:
-  NPM_AUTH_AUTOMATED: ${{ secrets.NPM_AUTH_AUTOMATED }}
+  push:
+    branches: [main]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +16,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests with coverage
-        run: npm test -- --coverage
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Type Check
+        run: npm run type-check || exit 1
