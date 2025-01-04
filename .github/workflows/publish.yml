@@ -49,11 +49,14 @@ jobs:
 
           // Define the path to package.json
           const packageJsonPath = path.resolve('./package.json');
+          const rootPackageJsonPath = path.resolve('../package.json');
 
           // Read and parse package.json
           const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+          const rootPackageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf8'));
 
           // Update fields in package.json
+          packageJson.version = rootPackageJson.version; // Bump version from root package.json
           packageJson.main = 'dist/index.js';
           packageJson.name = '@forge-fit/server';
           packageJson.types = 'dist/index.d.ts';
