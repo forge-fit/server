@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/exercises": {
+    "/api/v1/exercises": {
       "get": {
         "operationId": "ExercisesController_getExercises",
         "summary": "Get all exercises",
@@ -98,13 +98,16 @@
             "description": "body part enum of the exercise"
           },
           "equipment": {
-            "type": "string"
+            "type": "string",
+            "description": "equipment used for the exercise"
           },
           "gifUrl": {
-            "type": "string"
+            "type": "string",
+            "description": "gif url of the exercise"
           },
           "target": {
-            "type": "string"
+            "type": "string",
+            "description": "target muscle group of the exercise"
           },
           "secondaryMuscles": {
             "type": "array",

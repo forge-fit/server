@@ -1,9 +1,9 @@
 {
   "name": "@forge-fit/server",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "OpenAPI specification for Fit Track Exercises API",
   "files": [
-    "openapi.json"
+    "dist"
   ],
   "author": "",
   "private": false,
@@ -11,6 +11,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/forge-fit/server.git"
