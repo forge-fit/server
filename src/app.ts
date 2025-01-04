@@ -12,5 +12,9 @@ export async function createApp() {
     }),
   );
 
+  app.enableCors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  });
   return app;
 }
