@@ -1,44 +1,112 @@
-name: Publish OpenAPI Spec
+name: Build and Publish Generated SDK
 
 on:
   push:
+    paths:
+      - 'openapi.json'
+      - 'generated/**'
     branches:
       - main
-    paths:
-      - 'src/**'
-      - 'package.json'
-      - '.github/workflows/publish.yml'
-
-env:
-  GENERATE_OPENAPI: true
-  GITHUB_PACKAGES_TOKEN: ${{ secrets.PAT_TOKEN }}
 
 jobs:
-  publish:
+  build-and-publish:
     runs-on: ubuntu-latest
+    container:
+      image: timbru31/java-node
+
     steps:
-      - name: Checkout
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: https://npm.pkg.github.com/
-          scope: '@forge-fit'
+      - name: Install OpenAPI Generator
+        run: npm install -g @openapitools/openapi-generator-cli
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Generate OpenAPI spec
-        run: npm run generate:openapi
-
-      - name: Authenticate to npm
+      # Step 2: Generate SDK
+      - name: Generate SDK
         run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          echo "@forge-fit:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          openapi-generator-cli generate -i openapi.json -g typescript-axios -o ./generated
 
-      - name: Publish to NPM
-        run: npm publish --access public
+      # Step 3: Initialize npm in the generated folder
+      - name: Initialize npm
+        run: |
+          cd ./generated
+          npm init -y
+
+      # Step 4: Install Required Dependencies
+      - name: Install axios and TypeScript
+        run: |
+          cd ./generated
+          npm install axios
+          npm install typescript --save-dev
+          npm install @types/node --save-dev
+          npm install @types/axios --save-dev
+
+      # Step 5: Configure package.json
+      - name: Update package.json
+        run: |
+          cd ./generated
+          node -e "
+          const fs = require('fs');
+          const path = require('path');
+
+          // Define the path to package.json
+          const packageJsonPath = path.resolve('./package.json');
+
+          // Read and parse package.json
+          const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+          // Update fields in package.json
+          packageJson.main = 'dist/index.js';
+          packageJson.name = '@forge-fit/server';
+          packageJson.types = 'dist/index.d.ts';
+          packageJson.files = ['dist'];
+          packageJson.scripts = {
+            build: './node_modules/.bin/tsc'
+          };
+          packageJson.publishConfig = {
+            registry: 'https://npm.pkg.github.com/'
+          };
+          packageJson.dependencies = { ...packageJson.dependencies, axios: '^1.0.0' };
+
+          // Write updated package.json back to file
+          fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
+          "
+
+      # Step 6: Add a tsconfig.json file
+      - name: Add tsconfig.json
+        run: |
+          cd ./generated
+          echo '{
+            "compilerOptions": {
+              "outDir": "./dist",
+              "declaration": true,
+              "module": "CommonJS",
+              "target": "ES6",
+              "strict": true,
+              "esModuleInterop": true
+            },
+          }' > tsconfig.json
+
+      # Step 7: Build the SDK
+      - name: Build SDK
+        run: |
+          cd ./generated
+          npm run build
+
+      - name: Configure NPM registry and auth
+        run: |
+          echo "@forge-fit:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_AUTH_AUTOMATED }}" >> .npmrc
+
+      # Step 8: Publish SDK to npm
+      - name: Publish SDK to npm
+        run: |
+          cd ./generated
+          npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.PAT_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_AUTOMATED }}
+
+      # Step 9: Cleanup
+      - name: Cleanup Generated Folder
+        run: rm -rf ./generated
