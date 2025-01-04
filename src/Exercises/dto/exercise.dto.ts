@@ -1,4 +1,4 @@
-import { Exercise } from '@fit-track/exercises-api';
+import { Exercise } from '@forge-fit/exercises-api';
 import { ApiProperty } from '@nestjs/swagger';
 import { MuscleGroup } from './get-exercise.dto';
 

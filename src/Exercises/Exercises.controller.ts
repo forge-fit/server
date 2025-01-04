@@ -5,7 +5,7 @@ import { ExerciseDto } from './dto/exercise.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('exercises')
-@Controller('exercises')
+@Controller('api/v1/exercises')
 export class ExercisesController {
   constructor(private readonly exercisesService: ExercisesService) {}
 

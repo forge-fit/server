@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Configuration } from '@fit-track/exercises-api';
+import { Configuration } from '@forge-fit/exercises-api';
 
 @Injectable()
 export class ApiConfigService {

@@ -31,7 +31,7 @@
     "generate:openapi": "nest build && node dist/openapi.js"
   },
   "dependencies": {
-    "@fit-track/exercises-api": "1.0.7",
+    "@forge-fit/exercises-api": "1.0.6",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.3.0",
     "@nestjs/core": "^10.0.0",
