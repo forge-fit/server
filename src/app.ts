@@ -12,21 +12,20 @@ export async function createApp() {
     }),
   );
 
-  const allowedOrigins = [
-    'http://localhost:8080', // Development
-    'https://forge-fit.github.io/client', // Production
-  ];
-
   app.enableCors({
     origin: (origin, callback) => {
+      const allowedOrigins = [
+        'http://localhost:8080',
+        'https://forge-fit.github.io/client',
+      ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error(`Origin ${origin} not allowed by CORS`));
       }
     },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // Allow cookies/auth headers if needed
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS', // Include OPTIONS
+    allowedHeaders: 'Content-Type,Authorization', // Add necessary headers
   });
 
   return app;
