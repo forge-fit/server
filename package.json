@@ -1,6 +1,6 @@
 {
   "name": "@forge-fit/server",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "OpenAPI specification for Fit Track Exercises API",
   "files": [
     "dist"
