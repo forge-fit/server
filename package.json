@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "nest build",
+    "build:typescript": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:prod": "NODE_ENV=production node dist/main",
     "start": "NODE_ENV=development nest start --watch",
@@ -29,7 +30,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "generate:module": "plop",
-    "generate:openapi": "nest build && node dist/openapi.js"
+    "generate:openapi": "nest build && node dist/openapi.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@forge-fit/exercises-api": "1.0.6",
