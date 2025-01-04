@@ -2,9 +2,6 @@ name: Build and Publish Generated SDK
 
 on:
   push:
-    paths:
-      - 'openapi.json'
-      - 'generated/**'
     branches:
       - main
 
