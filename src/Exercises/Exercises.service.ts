@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ApiConfigService } from '../shared/api.config';
 import { ExerciseDto } from './dto/exercise.dto';
-import { GetExercisesDto } from './dto/get-exercise.dto';
+import { BodyPart, GetExercisesDto } from './dto/get-exercise.dto';
 import { ExercisesApi } from '@forge-fit/exercises-api';
 @Injectable()
 export class ExercisesService {
@@ -21,12 +21,9 @@ export class ExercisesService {
     @Query() getExercisesDto: GetExercisesDto,
   ): Promise<ExerciseDto[]> {
     try {
-      const { offset = 0, limit = 20, search, targetMuscle } = getExercisesDto;
+      const { offset = 0, limit = 20, search, bodyPart } = getExercisesDto;
 
-      const { data } = await this.exercisesApi.getExercises(
-        0,
-        Number.MAX_SAFE_INTEGER,
-      );
+      const { data } = await this.exercisesApi.getExercises(offset, limit);
 
       let exercises = data;
 
@@ -36,13 +33,10 @@ export class ExercisesService {
         );
       }
 
-      if (targetMuscle) {
+      if (bodyPart) {
         exercises = exercises.filter(
           (exercise) =>
-            exercise.target ||
-            exercise.secondaryMuscles
-              .map((muscle) => muscle.toLowerCase())
-              .includes(targetMuscle.toLowerCase()),
+            exercise.bodyPart.toLowerCase() === bodyPart.toLowerCase(),
         );
       }
 

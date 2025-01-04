@@ -10,7 +10,7 @@ import {
 import { Type as ClassTransformerType } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
-export enum MuscleGroup {
+export enum BodyPart {
   BACK = 'back',
   CARDIO = 'cardio',
   CHEST = 'chest',
@@ -47,6 +47,6 @@ export class GetExercisesDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsEnum(MuscleGroup)
-  targetMuscle?: MuscleGroup;
+  @IsEnum(BodyPart)
+  bodyPart?: BodyPart;
 }

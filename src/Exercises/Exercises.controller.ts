@@ -3,7 +3,6 @@ import { ExercisesService } from './Exercises.service';
 import { GetExercisesDto } from './dto/get-exercise.dto';
 import { ExerciseDto } from './dto/exercise.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-
 @ApiTags('exercises')
 @Controller('api/v1/exercises')
 export class ExercisesController {

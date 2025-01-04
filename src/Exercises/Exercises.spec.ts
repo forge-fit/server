@@ -3,7 +3,7 @@ import { ExercisesService } from './Exercises.service';
 import { ApiConfigService } from '../shared/api.config';
 import { ExercisesApi } from '@forge-fit/exercises-api';
 import { externalExercisesBuilder } from '../../test/builders';
-import { MuscleGroup } from './dto/get-exercise.dto';
+import { BodyPart } from './dto/get-exercise.dto';
 
 describe('ExercisesService', () => {
   let service: ExercisesService;
@@ -81,7 +81,7 @@ describe('ExercisesService', () => {
     );
   });
 
-  it('should get exercises with target muscle', async () => {
+  it('should get exercises with by body part', async () => {
     const mockExercises = [
       externalExercisesBuilder({
         name: 'shoulders incline',
@@ -106,7 +106,7 @@ describe('ExercisesService', () => {
       .mockResolvedValueOnce({ data: mockExercises });
 
     const exercises = await service.getExercises({
-      targetMuscle: MuscleGroup.SHOULDERS,
+      bodyPart: BodyPart.SHOULDERS,
     });
 
     expect(exercises).toBeDefined();

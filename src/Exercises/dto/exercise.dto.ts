@@ -1,6 +1,6 @@
 import { Exercise } from '@forge-fit/exercises-api';
 import { ApiProperty } from '@nestjs/swagger';
-import { MuscleGroup } from './get-exercise.dto';
+import { BodyPart } from './get-exercise.dto';
 
 export class ExerciseDto {
   @ApiProperty()
@@ -10,10 +10,10 @@ export class ExerciseDto {
   name: string;
 
   @ApiProperty({
-    enum: MuscleGroup,
+    enum: BodyPart,
     description: 'body part enum of the exercise',
   })
-  bodyPart: MuscleGroup;
+  bodyPart: BodyPart;
 
   @ApiProperty({
     description: 'equipment used for the exercise',
@@ -39,7 +39,7 @@ export class ExerciseDto {
   constructor(exercise: Exercise) {
     this.id = exercise.id;
     this.name = exercise.name;
-    this.bodyPart = exercise.bodyPart as MuscleGroup;
+    this.bodyPart = exercise.bodyPart as BodyPart;
     this.equipment = exercise.equipment;
     this.gifUrl = exercise.gifUrl;
     this.target = exercise.target;
