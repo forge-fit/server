@@ -16,7 +16,7 @@ export async function createApp() {
     origin: (origin, callback) => {
       const allowedOrigins = [
         'http://localhost:8080',
-        'https://forge-fit.github.io/client',
+        'https://forge-fit.github.io',
       ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
